@@ -1,0 +1,58 @@
+﻿@model List<DemoAjax.Model.Personne>
+
+@{
+    ViewBag.Title = "JQuery";
+}
+
+<h2>JQuery</h2>
+
+<div id="details"></div>
+
+
+<h3>Trouvé @Model.Count personnes</h3>
+
+<table>
+    <tr>
+        <th>Id</th>
+        <th>Nom</th>
+        <th>Prénom</th>
+    </tr>
+
+    @foreach (var personne in Model)
+    {
+        <tr>
+            <td>@personne.BusinessEntityID</td>
+            <td>@personne.FirstName</td>
+            <td>@personne.LastName</td>
+            <td>
+                <input value="Détails" type="button" id="@personne.BusinessEntityID" />
+
+                <script>
+                $("#@personne.BusinessEntityID").on("click",
+                    function (e) {
+                        $.ajax(
+                            {
+                                type:"GET",
+                                url:window.location.origin + "/api/personne/@personne.BusinessEntityID",
+                                success:OnSuccess
+                            }
+                            );
+
+                        function OnSuccess(response)
+                        {
+                            var personne = response;
+                            var html = "Id: " + personne.BusinessEntityID + "<br/>";
+                            html += "FirstName: " + personne.FirstName + "<br/>";
+                            html += "LastName: " + personne.LastName + "<br/>";
+
+                            $("#details").html(html);
+                        }
+                    }
+
+                    );
+                </script>
+            </td>
+        </tr>
+    }
+
+</table>

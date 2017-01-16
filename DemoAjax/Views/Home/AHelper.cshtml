@@ -1,0 +1,43 @@
+﻿@model List<DemoAjax.Model.Personne>
+
+@{
+    ViewBag.Title = "AHelper";
+}
+
+<h2>Ajax helper</h2>
+
+<div id="details"></div>
+
+
+<h3>Trouvé @Model.Count personnes</h3>
+
+<table>
+    <tr>
+        <th>Id</th>
+        <th>Nom</th>
+        <th>Prénom</th>
+    </tr>
+
+    @foreach (var personne in Model)
+    {
+        <tr>
+            <td>@personne.BusinessEntityID</td>
+            <td>@personne.FirstName</td>
+            <td>@personne.LastName</td>
+            <td>
+                <div id="@personne.BusinessEntityID">
+                    @Ajax.ActionLink("Détails", "Details",
+                       new { id = @personne.BusinessEntityID },
+                       new AjaxOptions()
+                       {
+                           HttpMethod = "GET",
+                           InsertionMode = InsertionMode.Replace,
+                           UpdateTargetId = @personne.BusinessEntityID.ToString(),
+                           Confirm ="Voulez-vous voir les détails?"
+                       })
+                </div>
+            </td>
+        </tr>
+    }
+
+</table>

@@ -1,0 +1,33 @@
+﻿@model List<DemoAjax.Model.Personne>
+
+@{
+    ViewBag.Title = "Xhr";
+}
+<script src="~/Scripts/xhrTools.js"></script>
+<h2>Xhr</h2>
+
+<div id="details"></div>
+
+
+<h3>Trouvé @Model.Count personnes</h3>
+
+<table>
+    <tr>
+        <th>Id</th>
+        <th>Nom</th>
+        <th>Prénom</th>
+    </tr>
+
+    @foreach (var personne in Model)
+    {
+        <tr>
+            <td>@personne.BusinessEntityID</td>
+            <td>@personne.FirstName</td>
+            <td>@personne.LastName</td>
+            <td>
+                    <a onclick="getJSON({ id: @personne.BusinessEntityID})">Détails</a>
+            </td>
+        </tr>
+    }
+
+</table>

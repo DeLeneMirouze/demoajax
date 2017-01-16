@@ -1,0 +1,50 @@
+﻿@model List<DemoAjax.Model.Personne>
+
+@{
+    ViewBag.Title = "Fetch";
+}
+
+<h2>Fetch</h2>
+
+<div id="details"></div>
+
+
+<h3>Trouvé @Model.Count personnes</h3>
+
+<table>
+    <tr>
+        <th>Id</th>
+        <th>Nom</th>
+        <th>Prénom</th>
+    </tr>
+
+    @foreach (var personne in Model)
+    {
+        <tr>
+            <td>@personne.BusinessEntityID</td>
+            <td>@personne.FirstName</td>
+            <td>@personne.LastName</td>
+            <td>
+                <a onclick="getDetail(@personne.BusinessEntityID)">Détails</a>
+     
+            </td>
+        </tr>
+    }
+
+</table>
+
+<script>
+                    var getDetail= function(id) {
+                        fetch(window.location.origin + "/api/personne/" + id)
+                        .then(response => response.json())
+                        .then(personne => {
+                            var html = "Id: " + personne.BusinessEntityID + "<br/>";
+                            html += "FirstName: " + personne.FirstName + "<br/>";
+                            html += "LastName: " + personne.LastName + "<br/>";
+
+                            var details = document.getElementById("details")
+                            details.innerHTML = html;
+                        })
+                        .catch();
+                    }
+</script>
