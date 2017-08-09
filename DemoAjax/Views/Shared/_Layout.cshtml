@@ -6,8 +6,8 @@
     <title>Démo Ajax</title>
     @Styles.Render("~/Content/css")
         @Scripts.Render("~/bundles/modernizr")
-        <script src="~/Scripts/jquery-1.10.2.min.js"></script>
-    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+        @*<script src="~/Scripts/jquery-1.10.2.min.js"></script>*@
+    @*<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>*@
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -20,16 +20,16 @@
                 </button>
                 @Html.ActionLink("Demo Ajax", "Index", "Home", null, new { @class = "navbar-brand" })
             </div>
-            @*<div class="navbar-collapse collapse">*@
-               
+
                 <ul class="nav navbar-nav">
        
                     <li>@Html.ActionLink("Xhr", "Xhr", "Home")</li>
                     <li>@Html.ActionLink("Ajax Razor", "AHelper", "Home")</li>
                     <li>@Html.ActionLink("JQuery", "JQuery", "Home")</li>
                     <li>@Html.ActionLink("Fetch", "Fetch", "Home")</li>
+                    <li>@Html.ActionLink("Formulaire", "Index", "Form")</li>
                 </ul>
-            @*</div>*@
+
         </div>
     </div>
     <div class="container body-content">
@@ -40,8 +40,15 @@
         </footer>
     </div>
 
-    @Scripts.Render("~/bundles/jquery")
+    <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
+    @*@Scripts.Render("~/bundles/jquery")*@
+
+    <script src="~/Scripts/jquery-3.1.1.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+
+
+
 </body>
 </html>

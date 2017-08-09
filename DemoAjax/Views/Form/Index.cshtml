@@ -1,0 +1,72 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Formulaire de saisie</h2>
+<button id="addBtn" class="btn" data-toggle="modal" data-target="#idModal">Ajouter</button>
+
+<div class="modal fade" id="idModal" data-show="modal" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="myModalLabel">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 id="myModalLabel">Faites une saisie SVP</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+               
+            </div>
+
+            <div class="modal-body">
+                <dl>
+                    <dt>Civilité</dt>
+                    <dd><select id="civilites" name="civilites"></select></dd>
+                    <dt>Nom</dt>
+                        <dd><input name="Nom" id="Nom" /></dd>
+                    <dt>Prénom</dt>
+                        <dd><input name="Prenom" id="Prenom"/></dd>
+                </dl>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal">Annuler</button>
+                <button type="submit" id="validate" class="btn">Valider</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{   
+    <script>
+    $(document).ready(function () {
+        $('#addBtn').on("click",
+        function() {
+               $.ajax(
+              {
+                 type:"GET",
+                 url:window.location.origin + "/api/FormApi",
+                 success:OnSuccess
+              });
+
+
+            $('#idModal').modal({show: true});
+            $('#idModal').modal('show');
+        });
+
+        $('#validate').on("submit",
+        function() {
+             $('#idModal').modal({show: false});
+           $('#idModal').modal('show');
+        });
+
+        function OnSuccess(data)
+        {
+        console.log(data);
+            var civilities=data.Civilites;
+         for (var i = 0; i < civilities.length; i++) {
+            var civility =civilities[i];
+                $('#civilites').append('<option value="' + civility.Id + '">' + civility.Label + '</option>');
+          }
+        }
+});
+    </script>
+    }
