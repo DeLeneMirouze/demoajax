@@ -133,6 +133,7 @@
     <Compile Include="Model\Civilite.cs" />
     <Compile Include="Model\EtatCivil.cs" />
     <Compile Include="Model\FormViewModel.cs" />
+    <Compile Include="Model\FormViewModelBuilder.cs" />
     <Compile Include="Model\Personne.cs" />
     <Compile Include="Model\Repository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -7,15 +7,8 @@ namespace DemoAjax.Controllers.Api
     {
         public FormViewModel Get()
         {
-            FormViewModel vm = new FormViewModel();
-            vm.EtatCivil = new EtatCivil();
-
-            Civilite cv = new Civilite() { Id = 1, Label = "Monsieur" };
-            vm.Civilites.Add(cv);
-            cv = new Civilite() { Id = 2, Label = "Madame" };
-            vm.Civilites.Add(cv);
-            cv = new Civilite() { Id = 3, Label = "Mademoiselle" };
-            vm.Civilites.Add(cv);
+            FormViewModelBuilder builder = new FormViewModelBuilder();
+            FormViewModel vm = builder.Build();
 
             return vm;
         }
