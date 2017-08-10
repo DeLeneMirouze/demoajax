@@ -12,18 +12,22 @@
             <div class="modal-header">
                 <h4 id="myModalLabel">Faites une saisie SVP</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-               
             </div>
 
             <div class="modal-body">
-                <dl>
-                    <dt>Civilité</dt>
-                    <dd><select id="civilites" name="civilites"></select></dd>
-                    <dt>Nom</dt>
-                        <dd><input name="Nom" id="Nom" /></dd>
-                    <dt>Prénom</dt>
-                        <dd><input name="Prenom" id="Prenom"/></dd>
-                </dl>
+                <ul id="errorMessages"></ul>
+
+                        <dl>
+                            <dt>Civilité</dt>
+                            <dd><select id="Civilites" name="Civilites"></select></dd>
+                            <dt>Nom</dt>
+                                <dd><input name="Nom" id="Nom" /></dd>
+                            <dt>Prénom</dt>
+                                <dd><input name="Prenom" id="Prenom"/></dd>
+                            <dt>Age</dt>
+                            <dd><input name="Age" id="Age" /></dd>
+                        </dl>
+ 
             </div>
 
             <div class="modal-footer">
@@ -39,7 +43,7 @@
     <script>
     $(document).ready(function () {
         $('#addBtn').on("click",
-        function() {
+            function() {
                $.ajax(
               {
                  type:"GET",
@@ -47,26 +51,44 @@
                  success:OnSuccess
               });
 
-
             $('#idModal').modal({show: true});
             $('#idModal').modal('show');
         });
 
-        $('#validate').on("submit",
-        function() {
-             $('#idModal').modal({show: false});
-           $('#idModal').modal('show');
+        function OnSuccess(data) {
+            var civilities = data.Civilites;
+            // alimente la liste déroulante
+            for (var i = 0; i < civilities.length; i++) {
+                var civility =civilities[i];
+
+                $('#Civilites').append('<option value="' + civility.Id + '">' + civility.Label + '</option>');
+            }
+        }
+
+        $('#validate').on("click",
+            function() {
+
+                var data="Nom=" + $("#Nom").val();
+                    data +="&Prenom=" + $("#Prenom").val();
+                    data +="&Age=" + $("#Age").val();
+                    data +="&Civilite=" + $("#Civilites  option:selected").val();
+
+                      $.ajax(
+                      {
+                         type:"POST",
+                         url:window.location.origin + "/api/FormApi",
+                         data:data,
+                         success:onSuccessPost
+                      });
         });
 
-        function OnSuccess(data)
-        {
-        console.log(data);
-            var civilities=data.Civilites;
-         for (var i = 0; i < civilities.length; i++) {
-            var civility =civilities[i];
-                $('#civilites').append('<option value="' + civility.Id + '">' + civility.Label + '</option>');
-          }
-        }
+        function onSuccessPost(data) {
+
+                //$('#errorMessages').append('<li value="' + civility.Id + '">' + civility.Label + '</li>');
+
+             $('#idModal').modal({show: false});
+             $('#idModal').modal('hide');
+        }
 });
     </script>
     }
