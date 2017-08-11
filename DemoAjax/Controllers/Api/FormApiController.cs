@@ -20,23 +20,7 @@ namespace DemoAjax.Controllers.Api
         [HttpPost]
         public EtatCivil Post(EtatCivil etatCivil)
         {
-            // Validation serveur
-            if (etatCivil.Age < 18)
-            {
-                ModelState.AddModelError("age", "Age doit être plus grand que 18");
-            }
-            if (string.IsNullOrWhiteSpace( etatCivil.Nom))
-            {
-                ModelState.AddModelError("nom", "Nom est obligatoire");
-            }
-            if (string.IsNullOrWhiteSpace(etatCivil.Prenom))
-            {
-                ModelState.AddModelError("prenom", "Prénom est obligatoire");
-            }
-            if (etatCivil.Civilite == 0)
-            {
-                ModelState.AddModelError("civilite", "Civilité est obligatoire");
-            }
+            Validate(etatCivil);
 
             if (!ModelState.IsValid)
             {
@@ -47,6 +31,7 @@ namespace DemoAjax.Controllers.Api
                 return etatCivil;
             }
 
+            etatCivil.Success = true;
             return etatCivil;
         }
 
@@ -67,6 +52,20 @@ namespace DemoAjax.Controllers.Api
             });
 
             return errorMessages;
+        }
+        #endregion
+
+        #region Validate (private)
+        private void Validate(EtatCivil etatCivil)
+        {
+            if (etatCivil.Age < 18)
+            {
+                ModelState.AddModelError("age", "Age doit être plus grand que 18");
+            }
+            if (etatCivil.Civilite == 0)
+            {
+                ModelState.AddModelError("civilite", "Civilité est obligatoire");
+            }
         } 
         #endregion
     }

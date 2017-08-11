@@ -15,7 +15,7 @@
             </div>
 
             <div class="modal-body">
-                <ul id="errorMessages"></ul>
+                <ol id="errorMessages"></ol>
 
                         <dl>
                             <dt>Civilité</dt>
@@ -63,6 +63,8 @@
 
                 $('#Civilites').append('<option value="' + civility.Id + '">' + civility.Label + '</option>');
             }
+
+            populate(data);
         }
 
         $('#validate').on("click",
@@ -70,7 +72,12 @@
 
                 var data="Nom=" + $("#Nom").val();
                     data +="&Prenom=" + $("#Prenom").val();
-                    data +="&Age=" + $("#Age").val();
+                    var age=$("#Age").val();
+                    if (!age) {
+                        age=0;
+                    }
+
+                    data +="&Age=" + age;
                     data +="&Civilite=" + $("#Civilites  option:selected").val();
 
                       $.ajax(
@@ -83,11 +90,27 @@
         });
 
         function onSuccessPost(data) {
+                if (data.Success) {
+                    $('#idModal').modal({show: false});
+                    $('#idModal').modal('hide');
 
-                //$('#errorMessages').append('<li value="' + civility.Id + '">' + civility.Label + '</li>');
+                    return;
+                }
 
-             $('#idModal').modal({show: false});
-             $('#idModal').modal('hide');
+                populate(data);
+        }
+
+        function populate(etatCivil)
+        {
+                $("#Age").val(etatCivil.Age);
+                $("#Nom").val(etatCivil.Nom);
+                $("#Prenom").val(etatCivil.Prenom);
+
+                $('#errorMessages').empty();
+                for (var i=0;i<etatCivil.ErrorMessages.length;i++)
+                {
+                    $('#errorMessages').append('<li>' + etatCivil.ErrorMessages[i] + '</li>');
+                }
         }
 });
     </script>
