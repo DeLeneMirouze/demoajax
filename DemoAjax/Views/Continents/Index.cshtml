@@ -1,0 +1,84 @@
+﻿@model ContinentViewModel
+
+@using DemoAjax.Model
+
+@{
+    ViewBag.Title = "Cascading";
+}
+
+<h2>Cascading dropdowns</h2>
+<b>Continents:</b> @Html.DropDownListFor(
+    m => m.Continents,
+    new SelectList(Model.Continents, "Id", "Name"),
+    string.Empty, new
+    {
+        @id = "continents"
+    })
+
+<br/>
+<b>Pays:</b> 
+ @Html.DropDownListFor(
+          m => m.Continents,
+          new SelectList(new List<Country>()),
+          string.Empty, new
+          {
+              @id = "countries"
+          })
+
+
+@section scripts
+{
+
+    <script>
+        $(document).ready(function () {
+            var idContinent = 0;
+
+            $("#continents").change(function (item) {
+                idContinent = $("select option:selected").val();
+
+                var url = window.location.origin + "/api/continents/" + idContinent + "/countries";
+                //console.log(url);
+
+                $.ajax(
+                    {
+                        type: "GET",
+                        url: url,
+                        success: function (response) {
+                            $("#countries").empty();
+
+                            $.each(response, function (index, value) {
+                                var option = "<option value='" + value.Id + "'>" + value.Name + "</option>";
+                                $(option).appendTo("#countries");
+                            });
+
+                            console.log(response);
+                        },
+                        error: function (xhr, ajaxOptions, thrownError) {
+                            console.log(thrownError);
+                        }
+                    });
+            });
+
+            $("#countries").change(function (item) {
+                var id = $("select option:selected").val();
+
+                var url = window.location.origin + "/api/continents/" + idContinent + "towns/" + id;
+                //console.log(url);
+
+                $.ajax(
+                    {
+                        type: "GET",
+                        url: url,
+                        success: function (response) {
+                            //console.log(response);
+                        },
+                        error: function (xhr, ajaxOptions, thrownError) {
+                            console.log(thrownError);
+                        }
+                    });
+            });
+
+        });
+
+    </script>
+}

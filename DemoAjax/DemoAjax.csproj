@@ -27,6 +27,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -123,6 +124,11 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\Api\ContinentsController.cs" />
+    <Compile Include="Model\ContinentBuilder.cs" />
+    <Compile Include="Model\Continent.cs" />
+    <Compile Include="Controllers\ContinentsController.cs" />
+    <Compile Include="Model\ContinentViewModel.cs" />
     <Compile Include="Controllers\Api\FormApiController.cs" />
     <Compile Include="Controllers\Api\PersonneController.cs" />
     <Compile Include="Controllers\FormController.cs" />
@@ -131,6 +137,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Model\Civilite.cs" />
+    <Compile Include="Model\Country.cs" />
     <Compile Include="Model\EtatCivil.cs" />
     <Compile Include="Model\FormViewModel.cs" />
     <Compile Include="Model\FormViewModelBuilder.cs" />
@@ -198,6 +205,8 @@
     <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.1.1.min.map" />
     <Content Include="Views\Form\Index.cshtml" />
+    <Content Include="Views\Continents\Index.cshtml" />
+    <Content Include="Views\Continents\Index2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
